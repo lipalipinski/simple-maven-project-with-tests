@@ -10,7 +10,7 @@
       <repository>
         <id>nexus</id>
         <name>maven-releases</name>
-        <url>http://localhost:8083/repository/maven-releases/</url
+         <url>http://localhost:8083/repository/maven-releases/</url>
       </repository>
       <snapshotRepository>
         <id>nexus</id>
