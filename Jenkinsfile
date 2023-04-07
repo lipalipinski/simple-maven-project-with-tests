@@ -19,16 +19,7 @@ pipeline {
                 echo "Building..."
                 withCredentials([usernamePassword(credentialsId: 'nexus-admin', passwordVariable: 'NEXUS_PWD', usernameVariable: 'NEXUS_USERNAME')]) {
                     // Run Maven on a Unix agent.
-                    sh "mvn -Dmaven.test.failure.ignore=true -s mvn-settings.xml clean package"
-                }
-            }
-        }
-        
-        stage('Deploy') {
-            steps {
-                echo "Deploying..."
-                withCredentials([usernamePassword(credentialsId: 'nexus-admin', passwordVariable: 'NEXUS_PWD', usernameVariable: 'NEXUS_USERNAME')]) {
-                    sh "mvn -Dmaven.test.failure.ignore=true -s mvn-settings.xml deploy"
+                    sh "mvn -Dmaven.test.failure.ignore=true -s mvn-settings.xml clean deploy"
                 }
             }
         }
