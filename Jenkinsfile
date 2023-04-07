@@ -1,9 +1,9 @@
 pipeline {
-    agent any
+    agent {label 'macos'}
 
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
-        maven "Maven-3.9.1-local"
+        maven 'maven-3.9.1'
     }
 
     stages {
@@ -11,15 +11,19 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Building..."
-                // Run Maven on a Unix agent.
-                sh "mvn -Dmaven.test.failure.ignore=true clean package"
+                withCredentials([usernamePassword(credentialsId: 'nexus-admin', passwordVariable: 'NEXUS_PWD', usernameVariable: 'NEXUS_USERNAME')]) {
+                    // Run Maven on a Unix agent.
+                    sh "mvn -Dmaven.test.failure.ignore=true -s mvn-settings.xml clean package"
+                }
             }
         }
         
         stage('Deploy') {
             steps {
                 echo "Deploying..."
-                sh "mvn -Dmaven.test.failure.ignore=true deploy"
+                withCredentials([usernamePassword(credentialsId: 'nexus-admin', passwordVariable: 'NEXUS_PWD', usernameVariable: 'NEXUS_USERNAME')]) {
+                    sh "mvn -Dmaven.test.failure.ignore=true -s mvn-settings.xml deploy"
+                }
             }
         }
     }
