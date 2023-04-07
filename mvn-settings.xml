@@ -39,7 +39,7 @@
       <!--This sends everything else to /public -->
       <id>nexus</id>
       <mirrorOf>*</mirrorOf>
-      <url>http://localhost:8083/repository/maven-central/</url>
+      <url>${env.NEXUS_CENTRAL}</url>
     </mirror>
   </mirrors>
 
