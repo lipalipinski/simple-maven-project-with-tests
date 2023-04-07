@@ -10,6 +10,8 @@ pipeline {
         NEXUS_RELEASES=credentials('nexus-mvn-central')
         NEXUS_SNAPSHOTS=credentials('nexus-mvn-snapshots')
         NEXUS_CENTRAL=credentials('nexus-maven-central')
+        // NEXUS_ADMIN_USR NEXUS_ADMIN_PSW
+        NEXUS_ADMIN=credentials('nexus-admin')
     }
 
     stages {
@@ -17,10 +19,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Building..."
-                withCredentials([usernamePassword(credentialsId: 'nexus-admin', passwordVariable: 'NEXUS_PWD', usernameVariable: 'NEXUS_USERNAME')]) {
-                    // Run Maven on a Unix agent.
-                    sh "mvn -Dmaven.test.failure.ignore=true -s mvn-settings.xml clean deploy"
-                }
+                sh "mvn -Dmaven.test.failure.ignore=true -s mvn-settings.xml clean deploy"
             }
         }
     }
