@@ -6,6 +6,12 @@ pipeline {
         maven 'maven-3.9.1'
     }
 
+    environment {
+        NEXUS_RELEASES=credentials('nexus-mvn-central')
+        NEXUS_SNAPSHOTS=credentials('nexus-mvn-snapshots')
+        NEXUS_CENTRAL=credentials('nexus-maven-central')
+    }
+
     stages {
         
         stage('Build') {
