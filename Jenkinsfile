@@ -9,7 +9,7 @@ pipeline {
     environment {
         NEXUS_RELEASES=credentials('nexus-mvn-central')
         NEXUS_SNAPSHOTS=credentials('nexus-mvn-snapshots')
-        NEXUS_CENTRAL=credentials('nexus-maven-central')
+        NEXUS_CENTRAL=credentials('nexus-mvn-central')
         // NEXUS_ADMIN_USR NEXUS_ADMIN_PSW
         NEXUS_ADMIN=credentials('nexus-admin')
     }
