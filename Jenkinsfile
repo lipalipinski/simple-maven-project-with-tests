@@ -18,7 +18,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Building..."
-                sh "mvn -Dmaven.test.failure.ignore=true -s mvn-settings.xml clean deploy"
+                sh "mvn -Dmaven.test.failure.ignore=true -s mvn-settings.xml --batch-mode clean deploy"
             }
         }
     }
