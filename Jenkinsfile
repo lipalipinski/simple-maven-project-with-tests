@@ -21,5 +21,16 @@ pipeline {
                 sh "mvn -Dmaven.test.failure.ignore=true -s mvn-settings.xml --batch-mode clean deploy"
             }
         }
+
+        stage('Build container') {
+            steps {
+                script{
+                    withDockerRegistry(credentialsId: 'nexus-usr', url: 'http://ubuntu-vm1:8081/repository/my-docker/') {
+                        def myImage = docker.build("simple-app:${env.BUILD_ID}")
+                        myImage.push()
+                    }
+                }
+            }
+        }
     }
 }
