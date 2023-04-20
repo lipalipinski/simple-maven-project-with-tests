@@ -25,7 +25,7 @@ pipeline {
         stage('Build container') {
             steps {
                 script{
-                    withDockerRegistry(credentialsId: 'nexus-usr', url: 'http://ubuntu-vm1:18090/') {
+                    docker.withRegistry('http://ubuntu-vm1:18090/', 'nexus-usr') {
                         def myImage = docker.build("simple-app:${env.BUILD_ID}")
                         myImage.push()
                     }
