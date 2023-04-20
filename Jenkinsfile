@@ -11,6 +11,7 @@ pipeline {
         NEXUS_CENTRAL=credentials('nexus-mvn-central')
         // NEXUS_ADMIN_USR NEXUS_ADMIN_PSW
         NEXUS_ADMIN=credentials('nexus-admin')
+        NEXUS_DOCKER_URL=credentials('docker-reg-url')
     }
 
     stages {
@@ -25,7 +26,7 @@ pipeline {
         stage('Build container') {
             steps {
                 script{
-                    docker.withRegistry('http://ubuntu-vm1:18090/', 'nexus-usr') {
+                    docker.withRegistry("${env.NEXUS_DOCKER_URL}", 'nexus-usr') {
                         def myImage = docker.build("simple-app:${env.BUILD_ID}")
                         myImage.push()
                     }
