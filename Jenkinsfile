@@ -26,8 +26,13 @@ pipeline {
         stage('Build container') {
             steps {
                 script{
+                    def pom = readMavenPom()
+                    env.APP_ID = pom.getArtifactId()
+                    env.GROUP_ID = pom.getGroupId()
+                    env.VERSION = pom.getVersion()
+
                     docker.withRegistry("${env.NEXUS_DOCKER_URL}", 'nexus-usr') {
-                        def myImage = docker.build("simple-app:${env.BUILD_ID}")
+                        def myImage = docker.build("${env.APP_ID}:${env.VERSION}-${env.BUILD_ID}")
                         myImage.push()
                     }
                 }
