@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {
-        NEXUS_RELEASES=credentials('nexus-mvn-central')
+        NEXUS_RELEASES=credentials('nexus-mvn-releases')
         NEXUS_SNAPSHOTS=credentials('nexus-mvn-snapshots')
         NEXUS_CENTRAL=credentials('nexus-mvn-central')
         // NEXUS_ADMIN_USR NEXUS_ADMIN_PSW
